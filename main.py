@@ -1,9 +1,8 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets
 from torchvision.transforms import ToTensor
-from dataset import SignsDataset, get_labels
+from dataset import SignsDataset
 from models import ANN
 
 device = (
