@@ -3,6 +3,7 @@ from torch.utils.data import Dataset
 from torchvision import datasets
 import json
 
+
 JSON_CONFIG_PATH = "dataset.json"
 
 
@@ -11,18 +12,11 @@ def open_config():
         return json.load(config_file)
 
 
-
 config = open_config()
 
+
 def get_labels(config):
-    words = []
-
-    for sample in config:
-        if not sample["word"] in words:
-            words.append(sample["word"])
-
-    return words
-
+    return list(set([sample["word"] for sample in config]))
     
 
 class SignsDataset(Dataset):
@@ -31,7 +25,7 @@ class SignsDataset(Dataset):
         self.labels = get_labels(config)
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.config)
 
     def __getitem__(self, index):
         sample = self.config[index]
