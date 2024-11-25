@@ -15,7 +15,7 @@ class ANN(nn.Module):
             nn.ReLU(),
             nn.Linear(512, 512),
             nn.ReLU(),
-            nn.Linear(512, features)
+            nn.Linear(512, features),
         )
 
     def forward(self, x):

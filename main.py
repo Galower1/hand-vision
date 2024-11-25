@@ -59,12 +59,18 @@ for t in range(EPOCHS):
     train(train_dataloader, model, loss_fn, optimizer)
 
 
-sample, label = dataset[7]
-sample = sample.unsqueeze(0).to(device)
-word = dataset.labels[label]
 
-pred: list = model(sample).tolist()[0]
-result = dataset.labels[pred.index(max(pred))]
 
-print("EXPECTED", word, "GOT", result)
 # torch.save(model.state_dict(), "model.pth")
+with torch.no_grad():
+    sample, label = dataset[0]
+    sample = sample.unsqueeze(0).to(device)
+    word = dataset.labels[label]
+
+    logits = model(sample)
+    probabilities = torch.softmax(logits, dim=1)
+    result = dataset.labels[torch.argmax(probabilities)]
+
+    print(probabilities)
+
+    print("EXPECTED", word, "GOT", result)
